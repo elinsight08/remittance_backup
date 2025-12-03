@@ -1,0 +1,40 @@
+{
+ "app": "remittance",
+ "charts": [],
+ "content": "[{\"id\":\"mybR7sDbZQ\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Database Backups</span>\",\"col\":12}}]",
+ "creation": "2025-04-25 11:24:12.015020",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "external-link",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Database Backups",
+ "link_to": "backups",
+ "link_type": "Page",
+ "links": [],
+ "modified": "2025-06-02 08:38:06.846935",
+ "modified_by": "Administrator",
+ "module": "Remittance",
+ "name": "Database Backups",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "Settings",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Administrator"
+  },
+  {
+   "role": "Super Admin"
+  }
+ ],
+ "sequence_id": 40.0,
+ "shortcuts": [],
+ "title": "Database Backups",
+ "type": "Link"
+}

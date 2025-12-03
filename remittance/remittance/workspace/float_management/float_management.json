@@ -1,0 +1,49 @@
+{
+ "app": "remittance",
+ "charts": [],
+ "content": "[{\"id\":\"bk4SWEUr6N\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Float Allocation</span>\",\"col\":12}}]",
+ "creation": "2025-04-25 11:08:37.160305",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "money-coins-1",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Float Management",
+ "link_to": "Float Allocation",
+ "link_type": "DocType",
+ "links": [],
+ "modified": "2025-06-22 11:41:26.627621",
+ "modified_by": "Administrator",
+ "module": "Remittance",
+ "name": "Float Management",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Administrator"
+  },
+  {
+   "role": "Super Admin"
+  },
+  {
+   "role": "Branch Manager"
+  },
+  {
+   "role": "Agent Manager"
+  },
+  {
+   "role": "Finance Manager"
+  }
+ ],
+ "sequence_id": 29.0,
+ "shortcuts": [],
+ "title": "Float Management",
+ "type": "Link"
+}

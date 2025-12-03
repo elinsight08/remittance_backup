@@ -1,0 +1,53 @@
+{
+ "app": "remittance",
+ "charts": [],
+ "content": "[{\"id\":\"ZVXhtVJf2d\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Teller Reports</span>\",\"col\":12}},{\"id\":\"eRbxF4MZTK\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Teller Pay-Ins Report\",\"col\":3}},{\"id\":\"olv95z9_c-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Teller Pay-Outs Report\",\"col\":3}}]",
+ "creation": "2025-07-14 08:33:45.605736",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "chart",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Teller Reports",
+ "link_type": "DocType",
+ "links": [],
+ "modified": "2025-07-14 14:22:30.446027",
+ "modified_by": "Administrator",
+ "module": "Remittance",
+ "name": "Teller Reports",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Till Operator"
+  }
+ ],
+ "sequence_id": 53.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Teller Pay-Ins Report",
+   "link_to": "Pay-Ins Report",
+   "report_ref_doctype": "Transaction",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Teller Pay-Outs Report",
+   "link_to": "Pay-Outs Report",
+   "report_ref_doctype": "Transaction",
+   "type": "Report"
+  }
+ ],
+ "title": "Teller Reports",
+ "type": "Workspace"
+}

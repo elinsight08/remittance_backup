@@ -1,0 +1,227 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "TCR-.######",
+ "creation": "2025-05-23 20:15:31.000121",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_g01w",
+  "amended_from",
+  "sender_name",
+  "transaction_id",
+  "user",
+  "reversal_status",
+  "sender_mobile_no",
+  "column_break_hesw",
+  "branch",
+  "receiver_amount",
+  "charge",
+  "amount_inc_charge",
+  "company",
+  "column_break_juem",
+  "currency",
+  "posting_date",
+  "section_break_ibkp",
+  "column_break_bnzh",
+  "receiver",
+  "receiver_mobile_no",
+  "column_break_vqjr",
+  "reversal_charge",
+  "reversal_amount",
+  "column_break_lvnr",
+  "reason"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_g01w",
+   "fieldtype": "Section Break",
+   "label": "Transaction Information"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Reversal",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "transaction_id",
+   "fieldtype": "Link",
+   "label": "Transaction ID",
+   "options": "Transaction"
+  },
+  {
+   "fieldname": "sender_name",
+   "fieldtype": "Data",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Sender Name"
+  },
+  {
+   "default": "0",
+   "fieldname": "reversal_charge",
+   "fieldtype": "Currency",
+   "label": "Reversal Charge",
+   "precision": "2"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Branch",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "in_standard_filter": 1,
+   "label": "User",
+   "options": "User"
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Datetime",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Posting Date"
+  },
+  {
+   "fieldname": "reason",
+   "fieldtype": "Small Text",
+   "label": "Reason"
+  },
+  {
+   "fieldname": "column_break_hesw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "default": "0",
+   "fieldname": "amount_inc_charge",
+   "fieldtype": "Currency",
+   "label": "Total Amount (Inc Charge)",
+   "precision": "2"
+  },
+  {
+   "default": "0",
+   "fieldname": "receiver_amount",
+   "fieldtype": "Currency",
+   "label": "Receiver Amount",
+   "precision": "2"
+  },
+  {
+   "default": "0",
+   "fieldname": "charge",
+   "fieldtype": "Currency",
+   "label": "Charge",
+   "precision": "2"
+  },
+  {
+   "default": "0",
+   "fieldname": "reversal_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Reversal Amount",
+   "precision": "2"
+  },
+  {
+   "fieldname": "reversal_status",
+   "fieldtype": "Select",
+   "label": "Transaction Status",
+   "options": "Pending Reversal\nApproved"
+  },
+  {
+   "fieldname": "sender_mobile_no",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Sender Mobile No"
+  },
+  {
+   "fieldname": "section_break_ibkp",
+   "fieldtype": "Section Break",
+   "label": "Receiver & Reversal Information"
+  },
+  {
+   "fieldname": "column_break_vqjr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "receiver_mobile_no",
+   "fieldtype": "Data",
+   "label": "Receiver Mobile Number"
+  },
+  {
+   "fieldname": "column_break_bnzh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "receiver",
+   "fieldtype": "Data",
+   "label": "Receiver Name"
+  },
+  {
+   "fieldname": "column_break_juem",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_lvnr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Company",
+   "options": "Company"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-05-25 14:52:16.081245",
+ "modified_by": "Administrator",
+ "module": "Remittance",
+ "name": "Reversal",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "transaction_id"
+}

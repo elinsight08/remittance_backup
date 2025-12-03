@@ -1,0 +1,19 @@
+{
+ "content": null,
+ "creation": "2025-06-18 11:47:01.895964",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2025-06-18 12:31:17.199141",
+ "modified_by": "Administrator",
+ "module": "Remittance",
+ "name": "recent-transactions",
+ "owner": "Administrator",
+ "page_name": "recent-transactions",
+ "roles": [],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 1,
+ "title": "Recent Transactions"
+}

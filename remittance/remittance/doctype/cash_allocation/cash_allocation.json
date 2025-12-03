@@ -1,0 +1,135 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "creation": "2025-05-12 19:04:50.806938",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_zqca",
+  "source_type",
+  "destination_type",
+  "amended_from",
+  "amount",
+  "column_break_whxa",
+  "from_branch",
+  "to_branch",
+  "from_agent",
+  "to_agent",
+  "from_till",
+  "to_till"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_zqca",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Cash Allocation",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Float",
+   "label": "Amount"
+  },
+  {
+   "fieldname": "source_type",
+   "fieldtype": "Select",
+   "label": "Source Type",
+   "options": "Agent\nBranch\nTill"
+  },
+  {
+   "fieldname": "column_break_whxa",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.source_type == \"Branch\"",
+   "fieldname": "from_branch",
+   "fieldtype": "Link",
+   "label": "From Branch",
+   "mandatory_depends_on": "eval:doc.source_type == \"Branch\"",
+   "options": "Branch"
+  },
+  {
+   "depends_on": "eval:doc.source_type == \"Agent\"",
+   "fieldname": "from_agent",
+   "fieldtype": "Link",
+   "label": "From Agent",
+   "mandatory_depends_on": "eval:doc.source_type == \"Branch\"",
+   "options": "Agent"
+  },
+  {
+   "depends_on": "eval:doc.source_type == \"Till\"",
+   "fieldname": "from_till",
+   "fieldtype": "Link",
+   "label": "From Till",
+   "mandatory_depends_on": "eval:doc.source_type == \"Till\"",
+   "options": "Till"
+  },
+  {
+   "fieldname": "destination_type",
+   "fieldtype": "Select",
+   "label": "Destination Type",
+   "options": "Agent\nBranch\nTill"
+  },
+  {
+   "depends_on": "eval:doc.destination_type == \"Branch\"",
+   "fieldname": "to_branch",
+   "fieldtype": "Link",
+   "label": "To Branch",
+   "mandatory_depends_on": "eval:doc.destination_type == \"Branch\"",
+   "options": "Branch"
+  },
+  {
+   "depends_on": "eval:doc.destination_type == \"Agent\"",
+   "fieldname": "to_agent",
+   "fieldtype": "Link",
+   "label": "To Agent",
+   "mandatory_depends_on": "eval:doc.destination_type == \"Agent\"",
+   "options": "Agent"
+  },
+  {
+   "depends_on": "eval:doc.destination_type == \"Till\"",
+   "fieldname": "to_till",
+   "fieldtype": "Link",
+   "label": "To Till",
+   "mandatory_depends_on": "eval:doc.destination_type == \"Till\"",
+   "options": "Till"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-05-23 16:13:25.342926",
+ "modified_by": "Administrator",
+ "module": "Remittance",
+ "name": "Cash Allocation",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

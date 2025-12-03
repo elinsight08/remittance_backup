@@ -1,0 +1,460 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "creation": "2025-04-27 13:18:34.599346",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "sender_details_section",
+  "customer",
+  "sender_name",
+  "identification_number",
+  "sender_mobile_no",
+  "column_break_lsay",
+  "purpose_of_transfer",
+  "purpose",
+  "transaction_status",
+  "posting_date",
+  "recipient_details_section",
+  "recipient_type",
+  "recipient_id",
+  "customer_id",
+  "receiver_name",
+  "withdrawal_date",
+  "column_break_iqhu",
+  "first_name",
+  "un_first_name",
+  "national_id",
+  "un_national_id",
+  "column_break_yuns",
+  "un_last_name",
+  "last_name",
+  "mobile_no",
+  "receiver_id",
+  "column_break_wgzn",
+  "receiver_house_no",
+  "street",
+  "city",
+  "amount_section",
+  "currency",
+  "amended_from",
+  "column_break_wtut",
+  "receiver_amount",
+  "charge",
+  "amount",
+  "section_break_ysei",
+  "created_branch",
+  "withdrawn_branch",
+  "created_till",
+  "withdrawn_till",
+  "withdrawn_by",
+  "cash_in",
+  "cash_out",
+  "reversed_with_charge",
+  "column_break_wqub",
+  "recipient_reminder_days",
+  "last_recipient_reminder",
+  "sender_reminder_days",
+  "last_sender_reminder"
+ ],
+ "fields": [
+  {
+   "fieldname": "sender_details_section",
+   "fieldtype": "Section Break",
+   "label": "Sender Details"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_global_search": 1,
+   "in_preview": 1,
+   "label": "Sender ID",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "purpose_of_transfer",
+   "fieldtype": "Link",
+   "label": "Purpose Of Transfer",
+   "options": "Purpose Of Transfer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_lsay",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "customer.customer_name",
+   "fieldname": "sender_name",
+   "fieldtype": "Data",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Sender Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "customer.identification_number",
+   "fieldname": "identification_number",
+   "fieldtype": "Data",
+   "label": "Identification Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "recipient_details_section",
+   "fieldtype": "Section Break",
+   "label": "Recipient Details"
+  },
+  {
+   "default": "Unregistered Customer",
+   "fieldname": "recipient_type",
+   "fieldtype": "Select",
+   "label": "Recipient Type",
+   "options": "Recipients\nUnregistered Customer"
+  },
+  {
+   "fieldname": "column_break_iqhu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.recipient_type == 'Registered Customer'",
+   "fieldname": "customer_id",
+   "fieldtype": "Link",
+   "label": "Recipient ID",
+   "options": "Customer"
+  },
+  {
+   "depends_on": "eval:doc.recipient_type == 'Recipients'",
+   "fieldname": "recipient_id",
+   "fieldtype": "Link",
+   "label": "Recipient ID",
+   "mandatory_depends_on": "eval:doc.recipient_type == 'Recipients'",
+   "options": "Recipient"
+  },
+  {
+   "depends_on": "eval:doc.recipient_type == 'Recipients'",
+   "fetch_from": "recipient_id.first_name",
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "First Name",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.recipient_type == 'Unregistered Customer'",
+   "fieldname": "un_first_name",
+   "fieldtype": "Data",
+   "label": "First Name",
+   "mandatory_depends_on": "eval:doc.recipient_type == 'Unregistered Customer'"
+  },
+  {
+   "depends_on": "eval:doc.recipient_type == 'Unregistered Customer'",
+   "fieldname": "un_last_name",
+   "fieldtype": "Data",
+   "label": "Last Name",
+   "mandatory_depends_on": "eval:doc.recipient_type == 'Unregistered Customer'"
+  },
+  {
+   "depends_on": "eval:doc.recipient_type == 'Unregistered Customer'",
+   "fieldname": "un_national_id",
+   "fieldtype": "Data",
+   "label": "National ID",
+   "mandatory_depends_on": "eval:doc.recipient_type == 'Unregistered Customer'"
+  },
+  {
+   "fieldname": "column_break_yuns",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.recipient_type == 'Recipients'",
+   "fetch_from": "recipient_id.last_name",
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Last Name",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.recipient_type == 'Recipients'",
+   "fetch_from": "recipient_id.national_id",
+   "fieldname": "national_id",
+   "fieldtype": "Data",
+   "label": "National ID",
+   "mandatory_depends_on": "eval:doc.recipient_type == 'Recipients'",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amount_section",
+   "fieldtype": "Section Break",
+   "label": "Amount"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Currency",
+   "options": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_wtut",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount (Inc Charge)",
+   "non_negative": 1
+  },
+  {
+   "depends_on": "eval:doc.purpose_of_transfer == 'Other'",
+   "fieldname": "purpose",
+   "fieldtype": "Data",
+   "label": "Purpose",
+   "mandatory_depends_on": "eval:doc.purpose_of_transfer == 'Other'"
+  },
+  {
+   "fieldname": "receiver_name",
+   "fieldtype": "Data",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Receiver Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Transaction",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "transaction_status",
+   "fieldtype": "Select",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Transaction Status",
+   "options": "Pending\nCompleted\nCancelled\nReversed\nPending Reversal",
+   "read_only": 1
+  },
+  {
+   "fieldname": "receiver_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Receiver Amount",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "withdrawal_date",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "label": "Withdrawal Date"
+  },
+  {
+   "fieldname": "section_break_ysei",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "charge",
+   "fieldtype": "Currency",
+   "label": "Charge",
+   "non_negative": 1,
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "created_branch",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Created Branch",
+   "options": "Branch",
+   "read_only": 1
+  },
+  {
+   "fieldname": "withdrawn_branch",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Withdrawn Branch",
+   "read_only": 1
+  },
+  {
+   "fieldname": "withdrawn_by",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Withdrawn By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "mobile_no",
+   "fieldtype": "Phone",
+   "label": "Phone Number",
+   "reqd": 1
+  },
+  {
+   "fieldname": "receiver_id",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Receiver ID"
+  },
+  {
+   "fetch_from": "customer.mobile_no",
+   "fieldname": "sender_mobile_no",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Sender Mobile No"
+  },
+  {
+   "fieldname": "column_break_wqub",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "7",
+   "fieldname": "recipient_reminder_days",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Receipient Reminder Days",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "last_recipient_reminder",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "label": "Last Recipient Reminder"
+  },
+  {
+   "default": "30",
+   "fieldname": "sender_reminder_days",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Sender Reminder Days",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "last_sender_reminder",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "label": "Last Sender Reminder"
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "cash_in",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Cash-In"
+  },
+  {
+   "default": "0",
+   "fieldname": "cash_out",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Cash-Out"
+  },
+  {
+   "fieldname": "withdrawn_till",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Withdrawn Till",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "created_till",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Created Till ",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "receiver_house_no",
+   "fieldtype": "Data",
+   "label": "House No."
+  },
+  {
+   "fieldname": "street",
+   "fieldtype": "Data",
+   "label": "Street"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City"
+  },
+  {
+   "fieldname": "column_break_wgzn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "reversed_with_charge",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Reversed With Charge",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "hide_toolbar": 1,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-07-14 09:00:15.447310",
+ "modified_by": "Administrator",
+ "module": "Remittance",
+ "name": "Transaction",
+ "naming_rule": "By script",
+ "owner": "tafadzwabarwa@gmail.com",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "read_only": 1,
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [
+  {
+   "color": "Red",
+   "title": "Cancelled"
+  },
+  {
+   "color": "Red",
+   "title": "Reversed"
+  },
+  {
+   "color": "Orange",
+   "title": "Pending Reversal"
+  }
+ ],
+ "title_field": "identification_number",
+ "track_changes": 1
+}

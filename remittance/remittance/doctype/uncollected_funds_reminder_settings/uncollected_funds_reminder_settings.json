@@ -1,0 +1,69 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-05-24 15:08:40.900824",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "is_enabled",
+  "recipient_reminder_days",
+  "sender_reminder_days",
+  "column_break_anim",
+  "column_break_wdkl"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "is_enabled",
+   "fieldtype": "Check",
+   "label": "Is Enabled"
+  },
+  {
+   "default": "7",
+   "fieldname": "recipient_reminder_days",
+   "fieldtype": "Int",
+   "label": "Recipient Reminder Days",
+   "non_negative": 1
+  },
+  {
+   "default": "30",
+   "fieldname": "sender_reminder_days",
+   "fieldtype": "Int",
+   "label": "Sender Reminder Days",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "column_break_anim",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_wdkl",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2025-05-24 15:10:55.934515",
+ "modified_by": "Administrator",
+ "module": "Remittance",
+ "name": "Uncollected Funds Reminder Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

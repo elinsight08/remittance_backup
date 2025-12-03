@@ -1,0 +1,37 @@
+{
+ "add_total_row": 0,
+ "add_translate_data": 0,
+ "columns": [],
+ "creation": "2025-05-28 21:53:13.894815",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letterhead": null,
+ "modified": "2025-05-28 21:53:13.894815",
+ "modified_by": "Administrator",
+ "module": "Remittance",
+ "name": "Agents report",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Agent",
+ "report_name": "Agents report",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Branch Manager"
+  },
+  {
+   "role": "Agent User"
+  },
+  {
+   "role": "Agent Manager"
+  }
+ ],
+ "timeout": 0
+}

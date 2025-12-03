@@ -1,0 +1,43 @@
+{
+ "app": "remittance",
+ "charts": [],
+ "content": "[{\"type\":\"header\",\"data\":{\"text\":\"Agents\"}}]",
+ "creation": "2025-04-25 15:28:59.046234",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "users",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Agents",
+ "link_to": "Agent",
+ "link_type": "DocType",
+ "links": [],
+ "modified": "2025-06-02 08:32:41.915427",
+ "modified_by": "Administrator",
+ "module": "Remittance",
+ "name": "Agents",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Administrator"
+  },
+  {
+   "role": "Agent Manager"
+  },
+  {
+   "role": "Super Admin"
+  }
+ ],
+ "sequence_id": 47.0,
+ "shortcuts": [],
+ "title": "Agents",
+ "type": "Link"
+}

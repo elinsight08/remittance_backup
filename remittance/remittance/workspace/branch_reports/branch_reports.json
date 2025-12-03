@@ -1,0 +1,77 @@
+{
+ "app": "remittance",
+ "charts": [],
+ "content": "[{\"id\":\"6cLEmbTa1e\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Branch Reports</span>\",\"col\":12}},{\"id\":\"ZRIZUQfwQA\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Teller Pay-ins report\",\"col\":3}},{\"id\":\"F8r-S-g46d\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Branch Till Cash Ins - Cash Out Report\",\"col\":3}},{\"id\":\"BWGqlDN9et\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Branch Pay-in report\",\"col\":3}},{\"id\":\"VleEH9B9Kn\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Teller Pay-outs report\",\"col\":3}},{\"id\":\"axLC0NLM6s\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Branch Pay-out Report\",\"col\":3}}]",
+ "creation": "2025-07-14 08:34:22.108351",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "chart",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Branch Reports",
+ "link_type": "DocType",
+ "links": [],
+ "modified": "2025-07-14 08:42:03.722570",
+ "modified_by": "Administrator",
+ "module": "Remittance",
+ "name": "Branch Reports",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Branch Manager"
+  }
+ ],
+ "sequence_id": 54.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Teller Pay-ins report",
+   "link_to": "Teller Pay-ins report",
+   "report_ref_doctype": "Transaction",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Branch Till Cash Ins - Cash Out Report",
+   "link_to": "Branch Till Cash Ins - Cash Out Report",
+   "report_ref_doctype": "Transaction",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Branch Pay-in report",
+   "link_to": "Branch Pay-in report",
+   "report_ref_doctype": "Transaction",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Teller Pay-outs report",
+   "link_to": "Teller Pay-outs report",
+   "report_ref_doctype": "Transaction",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Branch Pay-out Report",
+   "link_to": "Branch Pay-out Report",
+   "report_ref_doctype": "Transaction",
+   "type": "Report"
+  }
+ ],
+ "title": "Branch Reports",
+ "type": "Workspace"
+}

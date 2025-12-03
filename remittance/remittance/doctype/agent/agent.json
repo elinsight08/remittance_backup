@@ -1,0 +1,263 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "AGENT-.#####",
+ "creation": "2025-04-24 12:30:44.620204",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "agent_detail_section",
+  "agent_type",
+  "agent_name",
+  "agent_email_address",
+  "column_break_vspd",
+  "street_number",
+  "city",
+  "street",
+  "column_break_putn",
+  "agent_contact_number",
+  "country",
+  "commission_section",
+  "cash_in_commission",
+  "column_break_njcw",
+  "withdrawal_commission",
+  "column_break_yteb",
+  "balance",
+  "section_break_gjxo",
+  "opening_balance",
+  "current_balance",
+  "closing_balance",
+  "column_break_tzjl",
+  "threshold_min",
+  "threshold_max",
+  "column_break_gllo",
+  "currency",
+  "cash_in_hand",
+  "supporting_documents_section",
+  "table_huxy",
+  "section_break_xlxy",
+  "company"
+ ],
+ "fields": [
+  {
+   "fieldname": "agent_name",
+   "fieldtype": "Data",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Agent Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "agent_type",
+   "fieldtype": "Select",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Agent Type",
+   "options": "Individual\nCompany"
+  },
+  {
+   "fieldname": "column_break_vspd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "agent_email_address",
+   "fieldtype": "Data",
+   "label": "Email Address"
+  },
+  {
+   "fieldname": "agent_contact_number",
+   "fieldtype": "Phone",
+   "label": "Contact Number",
+   "reqd": 1
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Nationality",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "agent_detail_section",
+   "fieldtype": "Section Break",
+   "label": "Agent Information"
+  },
+  {
+   "fieldname": "column_break_putn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_gjxo",
+   "fieldtype": "Section Break",
+   "label": "Float Information"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "default": "0",
+   "fieldname": "opening_balance",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Opening Balance",
+   "non_negative": 1,
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "default": "0.00",
+   "fieldname": "current_balance",
+   "fieldtype": "Currency",
+   "label": "Float Balance",
+   "non_negative": 1,
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "threshold_min",
+   "fieldtype": "Currency",
+   "label": "Threshold Min",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "default": "0.00",
+   "fieldname": "closing_balance",
+   "fieldtype": "Currency",
+   "label": "Closing Balance",
+   "non_negative": 1,
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "threshold_max",
+   "fieldtype": "Currency",
+   "label": "Threshold Max",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "column_break_tzjl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_gllo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "cash_in_hand",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Cash In Balance",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_xlxy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "street",
+   "fieldtype": "Data",
+   "label": "Street"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City"
+  },
+  {
+   "fieldname": "street_number",
+   "fieldtype": "Data",
+   "label": "Address Number"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "supporting_documents_section",
+   "fieldtype": "Section Break",
+   "label": "Supporting Documents"
+  },
+  {
+   "fieldname": "table_huxy",
+   "fieldtype": "Table",
+   "options": "Document"
+  },
+  {
+   "fieldname": "commission_section",
+   "fieldtype": "Section Break",
+   "label": "Commission"
+  },
+  {
+   "fieldname": "cash_in_commission",
+   "fieldtype": "Percent",
+   "label": "Cash-in (%)"
+  },
+  {
+   "fieldname": "column_break_njcw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "withdrawal_commission",
+   "fieldtype": "Percent",
+   "label": "Withdrawals (%)"
+  },
+  {
+   "fieldname": "column_break_yteb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0.00",
+   "fieldname": "balance",
+   "fieldtype": "Currency",
+   "label": "Balance",
+   "precision": "2",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-07-14 15:38:55.607064",
+ "modified_by": "Administrator",
+ "module": "Remittance",
+ "name": "Agent",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "agent_name"
+}

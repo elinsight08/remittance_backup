@@ -1,0 +1,59 @@
+// Copyright (c) 2025, Tafadzwa Barwa and contributors
+// For license information, please see license.txt
+
+frappe.query_reports["Total Cash Outflows"] = {
+	filters: [
+		{
+			fieldname: "from_date",
+			label: __("From Date"),
+			fieldtype: "Date",
+			default: frappe.datetime.add_days(frappe.datetime.get_today(), -7),
+			reqd: 1,
+		},
+		{
+			fieldname: "to_date",
+			label: __("To Date"),
+			fieldtype: "Date",
+			default: frappe.datetime.get_today(),
+			reqd: 1,
+		},
+		{
+			fieldname: "source",
+			label: __("Source"),
+			fieldtype: "Select",
+			options: [
+				"",
+				"Teller Till",
+				"Branch Vault",
+				"Corporate Till"
+			],
+		},
+		{
+			fieldname: "destination",
+			label: __("Destination"),
+			fieldtype: "Data",
+			placeholder: "Teller, Vault, HQ, etc.",
+		},
+		{
+			fieldname: "transaction_type",
+			label: __("Transaction Type"),
+			fieldtype: "Select",
+			options: [
+				"",
+				"Pay-out",
+				"Float Out"
+			],
+		},
+		{
+			fieldname: "currency",
+			label: __("Currency"),
+			fieldtype: "Select",
+			options: [
+				"",
+				"USD",
+				"ZAR",
+				"ZIG"
+			],
+		},
+	]
+};

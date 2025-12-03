@@ -1,0 +1,244 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:branch_name",
+ "creation": "2025-04-24 12:39:06.022848",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "branch_name",
+  "country",
+  "tel",
+  "company",
+  "column_break_ooga",
+  "physical_address",
+  "street",
+  "city",
+  "section_break_ferf",
+  "primary_contact_person",
+  "float_section",
+  "opening_balance",
+  "current_balance",
+  "closing__balance",
+  "ecocash_float",
+  "smile_float",
+  "column_break_xjbg",
+  "threshold_min",
+  "threshold_max",
+  "innbucks_float",
+  "column_break_wqum",
+  "currency",
+  "cash_in_hand",
+  "funding_branch",
+  "omari_float",
+  "section_break_apkk",
+  "column_break_bwty",
+  "banks"
+ ],
+ "fields": [
+  {
+   "fieldname": "branch_name",
+   "fieldtype": "Data",
+   "label": "Branch Name",
+   "unique": 1
+  },
+  {
+   "fieldname": "physical_address",
+   "fieldtype": "Data",
+   "label": "Address No."
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Country",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_ooga",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_ferf",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "primary_contact_person",
+   "fieldtype": "Table",
+   "label": "Primary Contact Person",
+   "options": "Primary Contact Person"
+  },
+  {
+   "fieldname": "tel",
+   "fieldtype": "Data",
+   "label": "Tel"
+  },
+  {
+   "fieldname": "float_section",
+   "fieldtype": "Section Break",
+   "label": "Float Information"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "default": "0",
+   "fieldname": "opening_balance",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Opening Balance",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "default": "0.00",
+   "fieldname": "current_balance",
+   "fieldtype": "Float",
+   "label": "Float Balance",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "default": "0.00",
+   "fieldname": "closing__balance",
+   "fieldtype": "Float",
+   "label": "Closing  Balance",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "threshold_min",
+   "fieldtype": "Float",
+   "label": "Threshold Min",
+   "precision": "2"
+  },
+  {
+   "default": "0",
+   "fieldname": "threshold_max",
+   "fieldtype": "Float",
+   "label": "Threshold Max",
+   "precision": "2"
+  },
+  {
+   "fieldname": "column_break_xjbg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_wqum",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "default": "0.00",
+   "fieldname": "cash_in_hand",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Cash In Balance",
+   "non_negative": 1,
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "street",
+   "fieldtype": "Data",
+   "label": "Street"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City"
+  },
+  {
+   "default": "0",
+   "fieldname": "funding_branch",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Funding Branch",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_apkk",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "description": "For CBZ bank account only",
+   "fieldname": "banks",
+   "fieldtype": "Table",
+   "label": "Banks",
+   "options": "Bank"
+  },
+  {
+   "fieldname": "ecocash_float",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Ecocash Float"
+  },
+  {
+   "fieldname": "smile_float",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Smile Float"
+  },
+  {
+   "fieldname": "innbucks_float",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "InnBucks Float "
+  },
+  {
+   "fieldname": "omari_float",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Omari Float "
+  },
+  {
+   "fieldname": "column_break_bwty",
+   "fieldtype": "Column Break",
+   "hidden": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-11-12 15:12:52.402961",
+ "modified_by": "Administrator",
+ "module": "Remittance",
+ "name": "Branch",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "branch_name"
+}

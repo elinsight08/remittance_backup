@@ -1,0 +1,40 @@
+{
+ "app": "remittance",
+ "charts": [],
+ "content": "[{\"id\":\"6BFy_BUeYE\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Settings</span>\",\"col\":12}}]",
+ "creation": "2025-04-25 11:18:23.025974",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "setting-gear",
+ "idx": 1,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Settings",
+ "link_to": "System Settings",
+ "link_type": "DocType",
+ "links": [],
+ "modified": "2025-06-02 08:35:59.367068",
+ "modified_by": "Administrator",
+ "module": "Remittance",
+ "name": "Settings",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Administrator"
+  },
+  {
+   "role": "Super Admin"
+  }
+ ],
+ "sequence_id": 36.0,
+ "shortcuts": [],
+ "title": "Settings",
+ "type": "Link"
+}

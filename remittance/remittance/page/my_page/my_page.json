@@ -1,0 +1,20 @@
+{
+ "content": null,
+ "creation": "2025-04-24 11:33:00.634699",
+ "docstatus": 0,
+ "doctype": "Page",
+ "icon": "user",
+ "idx": 4,
+ "modified": "2025-05-27 14:20:38.861652",
+ "modified_by": "Administrator",
+ "module": "Remittance",
+ "name": "my-page",
+ "owner": "Administrator",
+ "page_name": "my-page",
+ "roles": [],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 1,
+ "title": "Remittance Dashboard"
+}

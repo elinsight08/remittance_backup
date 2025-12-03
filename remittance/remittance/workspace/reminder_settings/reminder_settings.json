@@ -1,0 +1,40 @@
+{
+ "app": "remittance",
+ "charts": [],
+ "content": "[{\"type\":\"header\",\"data\":{\"text\":\"Reminder Settings\"}}]",
+ "creation": "2025-05-24 15:41:50.934228",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "quantity-1",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Reminder Settings",
+ "link_to": "Uncollected Funds Reminder Settings",
+ "link_type": "DocType",
+ "links": [],
+ "modified": "2025-06-02 08:36:32.476994",
+ "modified_by": "Administrator",
+ "module": "Remittance",
+ "name": "Reminder Settings",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "Settings",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Administrator"
+  },
+  {
+   "role": "Super Admin"
+  }
+ ],
+ "sequence_id": 50.0,
+ "shortcuts": [],
+ "title": "Reminder Settings",
+ "type": "Link"
+}
