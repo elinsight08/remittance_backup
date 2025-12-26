@@ -103,8 +103,7 @@
    "fieldname": "current_balance",
    "fieldtype": "Float",
    "label": "Float Balance",
-   "precision": "2",
-   "read_only": 1
+   "precision": "2"
   },
   {
    "default": "0.00",
@@ -216,7 +215,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-12 15:12:52.402961",
+ "modified": "2025-12-04 07:44:36.878446",
  "modified_by": "Administrator",
  "module": "Remittance",
  "name": "Branch",

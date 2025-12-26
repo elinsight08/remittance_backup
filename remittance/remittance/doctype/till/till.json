@@ -83,8 +83,7 @@
    "label": "Float Balance",
    "non_negative": 1,
    "options": "0.00",
-   "precision": "2",
-   "read_only": 1
+   "precision": "2"
   },
   {
    "fieldname": "closing_balance",
@@ -181,7 +180,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-11-12 15:08:42.038108",
+ "modified": "2025-12-04 07:41:37.503495",
  "modified_by": "Administrator",
  "module": "Remittance",
  "name": "Till",

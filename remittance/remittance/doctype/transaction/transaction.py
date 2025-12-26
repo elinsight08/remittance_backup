@@ -48,13 +48,14 @@ class Transaction(Document):
                     self.created_till= till_name
                     if till_object.enabled == 0:
                         frappe.throw(f"The till '{till_name}' is currently closed. Please contact your administrator for assistance.")
-
-                    if till_object.current_balance < self.amount:
-                        frappe.throw(f"Insufficient balance in till {till_name}. Current balance is {till_object.current_balance}.")
+                    if self.cash_out ==1:
+                        if till_object.current_balance < self.amount:
+                            frappe.throw(f"Insufficient balance in till {till_name}. Current balance is {till_object.current_balance}.")
                 else:
                     agent_object = frappe.get_doc("Agent", user.agent)
-                    if agent_object.current_balance < self.amount:
-                        frappe.throw(f"Insufficient balance in agent {user.agent}. Current balance is {agent_object.current_balance}.")
+                    if self.cash_out ==1:
+                        if agent_object.current_balance < self.amount:
+                            frappe.throw(f"Insufficient balance in agent {user.agent}. Current balance is {agent_object.current_balance}.")
             else:
                 if teller:
                     till_name = teller[0].select_till
@@ -62,9 +63,9 @@ class Transaction(Document):
                     self.created_till= till_name
                     if till_object.enabled == 0:
                         frappe.throw(f"The till '{till_name}' is currently closed. Please contact your administrator for assistance.")
-
-                    if till_object.current_balance < self.amount:
-                        frappe.throw(f"Insufficient balance in till {till_name}. Current balance is {till_object.current_balance}.")
+                    if self.cash_out ==1:
+                        if till_object.current_balance < self.amount:
+                            frappe.throw(f"Insufficient balance in till {till_name}. Current balance is {till_object.current_balance}.")
                 else:
                     frappe.throw("User does not have a till assigned.")
 
