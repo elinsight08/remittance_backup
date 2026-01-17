@@ -1,5 +1,7 @@
 import frappe
 from frappe.utils import today
+from operation.utils.ledgers  import TillManager
+
 
 @frappe.whitelist()
 def get_balance():
@@ -10,6 +12,7 @@ def get_balance():
     total_received = 0
     total_sent = 0
     cash_balance = 0.00
+    till_manager = TillManager()
     if frappe.session.user != "Administrator":
         if user.is_agent:
             if teller:
@@ -35,7 +38,8 @@ def get_balance():
                                                         "docstatus": 1
 														}, fields=["receiver_amount"])
                     total_sent = sum(t["receiver_amount"] for t in transactions_two)
-                    cash_balance = till_object.current_balance
+                    cash_balance = till_manager.get_till_balance()
+                    # cash_balance = till_object.current_balance
                 else:
                     agent_object = frappe.get_doc("Agent", user.agent)
                     float_balance = agent_object.current_balance
@@ -95,14 +99,14 @@ def get_balance():
                                                          "docstatus": 1
                                                        }, fields=["receiver_amount"])
                 total_sent = sum(t["receiver_amount"] for t in transactions_two)
-                cash_balance = till_object.current_balance
+                cash_balance = till_manager.get_till_balance()
             else:
                 pass
 
     if user != "Administrator":
         # total_cash_balance = float_balance + cash_balance
         total_cash_balance = cash_balance
-        
+
         results = {
 			"float_balance": f"$ {total_cash_balance}",
 			"total_received": f"$ {total_received}",
@@ -126,13 +130,13 @@ def create_or_open_reconciliation(till):
     today_date = today()
     # Function to generate a new name with incremented suffix
     till_doc = frappe.get_doc("Till", till)
-    print("_______________________till_doc.current_balance______________", till_doc.current_balance)
+
     def generate_new_name(base_name):
         # Fetch existing documents to find the highest suffix
         existing_docs = frappe.get_all("Till Reconciliation", filters={
             "name": ["like", f"{base_name}%"]
         }, fields=["name"])
-        
+
         # Extract suffixes and find the maximum
         suffixes = []
         for doc in existing_docs:
@@ -140,13 +144,16 @@ def create_or_open_reconciliation(till):
                 suffix = doc.name.rsplit('-', 1)[-1]
                 if suffix.isdigit():
                     suffixes.append(int(suffix))
-        
+
         # Determine the next suffix
         next_suffix = max(suffixes, default=0) + 1
         return f"{base_name}-{next_suffix}"
-    
+
     # Function to calculate totals for the day
     def calculate_totals():
+        till_manager = TillManager()
+        cash_allocation = till_manager.get_cash_allocated_to_till()
+
         cash_in = frappe.db.sql("""
             SELECT COALESCE(SUM(amount), 0) FROM `tabTransaction`
             WHERE owner=%s AND cash_in=1 AND posting_date = %s
@@ -157,16 +164,10 @@ def create_or_open_reconciliation(till):
             WHERE withdrawn_by=%s AND cash_out=1 AND withdrawal_date = %s
         """, (frappe.session.user, today_date))[0][0]
 
-        allocations = frappe.db.sql("""
-            SELECT COALESCE(SUM(amount), 0) FROM `tabFloat Allocation`
-            WHERE to_till=%s AND posting_date = %s AND docstatus=1 AND destination_type = 'Till'
-        """, (till, today_date))[0][0]
-        
-        from_til_allocations = frappe.db.sql("""
-            SELECT COALESCE(SUM(amount), 0) FROM `tabFloat Allocation`
-            WHERE from_till=%s AND posting_date = %s AND docstatus=1 AND source_type = 'Till'
-        """, (till, today_date))[0][0]
-        
+        allocations = cash_allocation['total_credit'] #allocations made to till today
+
+        from_til_allocations = cash_allocation['total_debit'] #allocations made from till today
+
         charges = frappe.db.sql("""
             SELECT COALESCE(SUM(charge), 0) FROM `tabTransaction`
             WHERE owner=%s AND cash_in=1 AND posting_date = %s
@@ -214,7 +215,7 @@ def create_or_open_reconciliation(till):
     #         if '-' in base_name:
     #             base_name = base_name.rsplit('-', 1)[0]
     #         new_doc.name = generate_new_name(base_name)  # Generate new name with suffix
-            
+
     #         # Set the "Amended From" field
     #         new_doc.amended_from = recon_doc.name
     #         new_doc.docstatus = 0
@@ -229,9 +230,9 @@ def create_or_open_reconciliation(till):
     #         return new_doc
     #     else:
     #         pass
-            
+
     # else:
-    #     previous = frappe.get_all("Till Reconciliation", filters={"till": till}, 
+    #     previous = frappe.get_all("Till Reconciliation", filters={"till": till},
     #                                order_by="posting_date desc", limit=1, fields=["closing_balance"])
     #     # opening_balance = previous[0]["closing_balance"] if previous else 0.0
     #     opening_balance = till_doc.opening_balance
@@ -240,7 +241,7 @@ def create_or_open_reconciliation(till):
     opening_balance = till_doc.opening_balance
     cash_in, cash_out, allocations, charges, from_til_allocations = calculate_totals()
     calculated = opening_balance + allocations + cash_in - cash_out - from_til_allocations # TO DO -subtract remittance amount # Done Deal
-    
+
     # Create new Till Reconciliation doc
     doc = frappe.get_doc({
         "doctype": "Till Reconciliation",
@@ -259,99 +260,7 @@ def create_or_open_reconciliation(till):
     })
     doc.insert(ignore_permissions=True)
     return doc
-# @frappe.whitelist()
-# def create_or_open_reconciliation(till):
-#     # Check if one exists for today
-#     recon = frappe.get_all("Till Reconciliation", filters={
-#         "till": till,
-#         "posting_date": today(),
-#     }, fields=["name"], limit=1)
 
-#     if recon:
-#         if recon[0].docstatus == 0:
-#             return frappe.get_doc("Till Reconciliation", recon[0].name)
-#         elif recon[0].docstatus == 2:
-#             previous = frappe.get_all("Till Reconciliation", filters={
-#                     "till": till,
-#                     "docstatus": 1
-#                 }, order_by="posting_date desc", limit=1, fields=["closing_balance"])
-#             opening_balance = previous[0]["closing_balance"] if previous else 0.0
-#                 # Calculate totals for the day (example: adjust to real Doctype)
-#             cash_in = frappe.db.sql("""
-#                 SELECT COALESCE(SUM(amount), 0) FROM `tabTransaction`
-#                 WHERE owner=%s AND cash_in=1 AND posting_date = %s
-#             """, (frappe.session.user, today()))[0][0]
-
-
-#             cash_out = frappe.db.sql("""
-#                 SELECT COALESCE(SUM(receiver_amount), 0) FROM `tabTransaction`
-#                 WHERE withdrawn_by=%s AND cash_out=1 AND posting_date = %s
-#             """, (frappe.session.user, today()))[0][0]
-
-#             allocations = frappe.db.sql("""
-#                 SELECT COALESCE(SUM(amount), 0) FROM `tabFloat Allocation`
-#                 WHERE to_till=%s AND posting_date = %s AND docstatus=1 AND destination_type = 'Till'
-#             """, (till, today()))[0][0]
-
-#             calculated = opening_balance + allocations + cash_in - cash_out
-
-#             # Create new Till Reconciliation doc
-#             doc = frappe.get_doc({
-#                 "doctype": "Till Reconciliation",
-#                 "till": till,
-#                 "date": today(),
-#                 "opening_balance":  opening_balance,
-#                 "total_cash_in": cash_in,
-#                 "total_cash_out": cash_out,
-#                 "allocations_received": allocations,
-#                 "closing_balance": calculated,
-#                 "till_operator": frappe.session.user,
-#                 "posting_date": today()
-#             })
-#             doc.insert(ignore_permissions=True)
-#             return doc
-
-#     # Fetch opening balance from previous day's reconciliation
-#     previous = frappe.get_all("Till Reconciliation", filters={
-#         "till": till
-#     }, order_by="posting_date desc", limit=1, fields=["closing_balance"])
-
-#     opening_balance = previous[0]["closing_balance"] if previous else 0.0
-
-#     # Calculate totals for the day (example: adjust to real Doctype)
-#     cash_in = frappe.db.sql("""
-#         SELECT COALESCE(SUM(amount), 0) FROM `tabTransaction`
-#         WHERE owner=%s AND cash_in=1 AND posting_date = %s
-#     """, (frappe.session.user, today()))[0][0]
-
-
-#     cash_out = frappe.db.sql("""
-#         SELECT COALESCE(SUM(receiver_amount), 0) FROM `tabTransaction`
-#         WHERE withdrawn_by=%s AND cash_out=1 AND posting_date = %s
-#     """, (frappe.session.user, today()))[0][0]
-
-#     allocations = frappe.db.sql("""
-#         SELECT COALESCE(SUM(amount), 0) FROM `tabFloat Allocation`
-#         WHERE to_till=%s AND posting_date = %s AND docstatus=1 AND destination_type = 'Till'
-#     """, (till, today()))[0][0]
-
-#     calculated = opening_balance + allocations + cash_in - cash_out
-
-#     # Create new Till Reconciliation doc
-#     doc = frappe.get_doc({
-#         "doctype": "Till Reconciliation",
-#         "till": till,
-#         "date": today(),
-#         "opening_balance":  opening_balance,
-#         "total_cash_in": cash_in,
-#         "total_cash_out": cash_out,
-#         "allocations_received": allocations,
-#         "closing_balance": calculated,
-#         "till_operator": frappe.session.user,
-#         "posting_date": today()
-#     })
-#     doc.insert(ignore_permissions=True)
-#     return doc
 
 @frappe.whitelist()
 def get_exchange_rate():

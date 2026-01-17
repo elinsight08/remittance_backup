@@ -9,6 +9,7 @@ from frappe.model.document import Document
 from frappe.core.doctype.sms_settings.sms_settings import send_sms
 import frappe.realtime
 from frappe.utils import now
+from operation.utils.ledgers  import TillManager
 
 class Transaction(Document):
     def before_rename(self, current_name, updated_name, merge):
@@ -24,19 +25,19 @@ class Transaction(Document):
         receiver_list = [self.mobile_no]
         if self.mobile_no:
             send_sms(receiver_list, msg)
-    
+
     def validate_id(self,data):
         import re
         pattern = r'^\d{2}\d{5,10}[a-zA-Z]\d{2}$'
-        
+
         if re.match(pattern, data):
             return True
 
     def validate(self):
         if self.amount <= 0:
             frappe.throw("Transaction amount must be greater than zero.")
+        till_manager = TillManager()
 
-        
         if frappe.session.user != "Administrator":
             user = frappe.get_doc("User", frappe.session.user)
             teller = frappe.get_all("Teller", filters={"branch":user.branch, "name":  user.email}, fields=["select_till"])
@@ -46,11 +47,12 @@ class Transaction(Document):
                     till_name = teller[0].select_till
                     till_object = frappe.get_doc("Till", till_name)
                     self.created_till= till_name
+                    till_balance = till_manager.get_till_balance()
                     if till_object.enabled == 0:
                         frappe.throw(f"The till '{till_name}' is currently closed. Please contact your administrator for assistance.")
                     if self.cash_out ==1:
-                        if till_object.current_balance < self.amount:
-                            frappe.throw(f"Insufficient balance in till {till_name}. Current balance is {till_object.current_balance}.")
+                        if till_balance < self.amount:
+                            frappe.throw(f"Insufficient balance in till {till_name}. Current balance is {till_balance}.")
                 else:
                     agent_object = frappe.get_doc("Agent", user.agent)
                     if self.cash_out ==1:
@@ -61,17 +63,18 @@ class Transaction(Document):
                     till_name = teller[0].select_till
                     till_object = frappe.get_doc("Till", till_name)
                     self.created_till= till_name
+                    till_balance = till_manager.get_till_balance()
                     if till_object.enabled == 0:
                         frappe.throw(f"The till '{till_name}' is currently closed. Please contact your administrator for assistance.")
                     if self.cash_out ==1:
-                        if till_object.current_balance < self.amount:
-                            frappe.throw(f"Insufficient balance in till {till_name}. Current balance is {till_object.current_balance}.")
+                        if till_balance < self.amount:
+                            frappe.throw(f"Insufficient balance in till {till_name}. Current balance is {till_balance}.")
                 else:
                     frappe.throw("User does not have a till assigned.")
 
     def on_submit(self):
         """Hook method triggered after submitting the document."""
-       
+
 
         #send sms
         self._send_sms()
@@ -91,15 +94,16 @@ class Transaction(Document):
         if frappe.session.user != "Administrator":
             user = frappe.get_doc("User", frappe.session.user)
             teller = frappe.get_all("Teller", filters={"branch":user.branch, "name":  user.email}, fields=["select_till"])
-            
+            till_manager = TillManager()
             if user.is_agent:
                 if teller:
-                    till_name = teller[0].select_till
+                    # till_name = teller[0].select_till
+                    till_manager.adjust_balance(self.amount, "add")
                     # self.update_sender_till(till_name)
-                    till_object = frappe.get_doc("Till", till_name)
-                    till_object.cash_in_hand += self.amount
-                    till_object.current_balance += self.amount
-                    till_object.save()
+                    # till_object = frappe.get_doc("Till", till_name)
+                    # till_object.cash_in_hand += self.amount
+                    # till_object.current_balance += self.amount
+                    # till_object.save()
                 else:
                     agent_object = frappe.get_doc("Agent", user.agent)
                     agent_object.cash_in_hand += self.amount
@@ -107,36 +111,40 @@ class Transaction(Document):
                     agent_object.save()
             else:
                 if teller:
-                    till_name = teller[0].select_till
-                    till_object = frappe.get_doc("Till", till_name)
-                    till_object.cash_in_hand += self.amount
-                    till_object.current_balance += self.amount
-                    till_object.save()
-            frappe.db.commit()
+                    till_manager.adjust_balance(self.amount, "add")
+                    # till_name = teller[0].select_till
+                    # till_object = frappe.get_doc("Till", till_name)
+                    # till_object.cash_in_hand += self.amount
+                    # till_object.current_balance += self.amount
+                    # till_object.save()
+            # frappe.db.commit()
 
     def deduct_float(self):
         """Deduct the float from the teller or agent."""
         if frappe.session.user != "Administrator":
             user = frappe.get_doc("User", frappe.session.user)
             teller = frappe.get_all("Teller", filters={"branch":user.branch, "name":  user.email}, fields=["select_till"])
+            till_manager = TillManager()
             if user.is_agent:
                 if teller:
-                    till_name = teller[0].select_till
-                   
-                    till_object = frappe.get_doc("Till", till_name)
-                    till_object.current_balance -= self.receiver_amount
-                    till_object.save()
+                    till_manager.adjust_balance(self.amount, "subtract")
+                    # till_name = teller[0].select_till
+
+                    # till_object = frappe.get_doc("Till", till_name)
+                    # till_object.current_balance -= self.receiver_amount
+                    # till_object.save()
                 else:
                     agent_object = frappe.get_doc("Agent", user.agent)
                     agent_object.current_balance -= self.receiver_amount
                     agent_object.save()
             else:
                 if teller:
-                    till_name = teller[0].select_till
-                
-                    till_object = frappe.get_doc("Till", till_name)
-                    till_object.current_balance -= self.receiver_amount
-                    till_object.save()
+                    till_manager.adjust_balance(self.amount, "subtract")
+                    # till_name = teller[0].select_till
+
+                    # till_object = frappe.get_doc("Till", till_name)
+                    # till_object.current_balance -= self.receiver_amount
+                    # till_object.save()
 
             frappe.db.commit()
             send_alert_min_threshold()
@@ -146,10 +154,10 @@ class Transaction(Document):
         #assign user branch from session
         self.posting_date = frappe.utils.now()
         self.cash_in = 1
-        
+
         if frappe.session.user != "Administrator":
             user = frappe.get_doc("User", frappe.session.user)
-            
+
             if user.branch:
                 self.created_branch = user.branch
             else:
@@ -164,7 +172,7 @@ class Transaction(Document):
             # Check if the name already exists
             if not frappe.db.exists("Transaction", unique_name):
                 return unique_name
-                
+
 
     def _set_receiver_name(self):
         if self.recipient_type == 'Recipients':
@@ -213,13 +221,14 @@ def send_collected_money_sms(receiver_name, receiver_amount, doc_name, sender_id
             send_sms(receiver_list, msg)
 
 @frappe.whitelist()
-def withdraw(docname): 
+def withdraw(docname):
     withdrawn_branch = ""
     withdrawn_by = ""
     withdrawn_till = ""
     transaction_object = frappe.get_doc("Transaction", docname)
     user = frappe.get_doc("User", frappe.session.user)
     teller = frappe.get_all("Teller", filters={"branch":user.branch, "name":  user.email}, fields=["select_till"])
+    till_manager = TillManager()
     if frappe.session.user != "Administrator":
         withdrawn_by = user.email
         if user.branch:
@@ -230,14 +239,15 @@ def withdraw(docname):
                 withdrawn_till= till_name
                 till_object = frappe.get_doc("Till", till_name)
                 withdrawn_branch = till_object.branch
+                till_balance = till_manager.get_till_balance()
                 if till_object.enabled == 0:
                         frappe.throw(f"The till '{till_name}' is currently closed. Please contact your administrator for assistance.")
 
-                if till_object.current_balance < transaction_object.receiver_amount:
-                    frappe.throw(f"Insufficient balance in till {till_name}. Current balance is {till_object.current_balance}.")
+                if till_balance < transaction_object.receiver_amount:
+                    frappe.throw(f"Insufficient balance in till {till_name}. Current balance is {till_balance}.")
                 else:
-                    till_object.current_balance -= transaction_object.receiver_amount
-                    till_object.save()
+                    #update till balance
+                    till_manager.adjust_balance(transaction_object.receiver_amount, "subtract")
             else:
                 agent_object = frappe.get_doc("Agent", user.agent)
                 if agent_object.current_balance < transaction_object.receiver_amount:
@@ -251,15 +261,15 @@ def withdraw(docname):
                 withdrawn_till = till_name
                 till_object = frappe.get_doc("Till", till_name)
                 withdrawn_branch = till_object.branch
+                till_balance = till_manager.get_till_balance()
                 if till_object.enabled == 0:
                         frappe.throw(f"The till '{till_name}' is currently closed. Please contact your administrator for assistance.")
 
-                if till_object.current_balance < transaction_object.receiver_amount:
-                     frappe.throw(f"Insufficient balance in till {till_name}. Current balance is {till_object.current_balance}.")
+                if till_balance < transaction_object.receiver_amount:
+                     frappe.throw(f"Insufficient balance in till {till_name}. Current balance is {till_balance}.")
                 else:
                     print("about to update..")
-                    till_object.current_balance -= transaction_object.receiver_amount
-                    till_object.save()
+                    till_manager.adjust_balance(transaction_object.receiver_amount, "subtract")
                     print("updated")
             else:
                 frappe.throw("User does not have a till assigned.")
@@ -473,7 +483,7 @@ def reverse_transaction(docname,reason, apply_fee):
 
 # @frappe.whitelist()
 # def withdraw_reversal(docname):
-    
+
 #     print("_____________revesal____________")
 #     reversal_objects = frappe.get_all(
 # 		"Reversal",
@@ -489,7 +499,7 @@ def reverse_transaction(docname,reason, apply_fee):
 #             print("_____________frappe.session.user", frappe.session.user)
 #             print("______________reversal_object.branch", reversal_object.branch)
 #             print("______________reversal_object.reversal_amount", reversal_object.reversal_amount)
-            
+
 #             frappe.db.sql("""
 #                 UPDATE `tabTransaction`
 #                 SET transaction_status = %s,
@@ -497,27 +507,28 @@ def reverse_transaction(docname,reason, apply_fee):
 #                     withdrawn_branch = %s
 #                 WHERE name = %s AND docstatus = 1
 #             """, ('Reversed', frappe.session.user, reversal_object.branch, docname))
-            
+
 @frappe.whitelist()
-def withdraw_reversal(docname): 
+def withdraw_reversal(docname):
     reversal_objects = frappe.get_all(
 		"Reversal",
 		filters={"transaction_id": docname},  # Adjust the filter key based on your DocType's structure
 		fields=["reversal_status", "branch", "reversal_amount"],
 		limit=1
 	)
-    
+
     if reversal_objects:
         reversal_object = reversal_objects[0]
         if reversal_object.reversal_status == "Pending Reversal":
             frappe.throw("Reversal is still pending. Please wait for the reversal to be processed before withdrawing.")
-    
+
     withdrawn_branch = ""
     withdrawn_by = ""
     withdrawn_till = ""
     transaction_object = frappe.get_doc("Transaction", docname)
     user = frappe.get_doc("User", frappe.session.user)
     teller = frappe.get_all("Teller", filters={"branch":user.branch, "name":  user.email}, fields=["select_till"])
+    till_manager = TillManager()
     if frappe.session.user != "Administrator":
         withdrawn_by = user.email
         if user.branch:
@@ -528,14 +539,14 @@ def withdraw_reversal(docname):
                 withdrawn_till= till_name
                 till_object = frappe.get_doc("Till", till_name)
                 withdrawn_branch = till_object.branch
+                till_balance = till_manager.get_till_balance()
                 if till_object.enabled == 0:
                         frappe.throw(f"The till '{till_name}' is currently closed. Please contact your administrator for assistance.")
 
-                if till_object.current_balance < transaction_object.receiver_amount:
-                    frappe.throw(f"Insufficient balance in till {till_name}. Current balance is {till_object.current_balance}.")
+                if till_balance < transaction_object.receiver_amount:
+                    frappe.throw(f"Insufficient balance in till {till_name}. Current balance is {till_balance}.")
                 else:
-                    till_object.current_balance -= transaction_object.receiver_amount
-                    till_object.save()
+                    till_manager.adjust_balance(transaction_object.receiver_amount, "subtract")
             else:
                 agent_object = frappe.get_doc("Agent", user.agent)
                 if agent_object.current_balance < transaction_object.receiver_amount:
@@ -549,15 +560,15 @@ def withdraw_reversal(docname):
                 withdrawn_till = till_name
                 till_object = frappe.get_doc("Till", till_name)
                 withdrawn_branch = till_object.branch
+                till_balance = till_manager.get_till_balance()
                 if till_object.enabled == 0:
                         frappe.throw(f"The till '{till_name}' is currently closed. Please contact your administrator for assistance.")
 
-                if till_object.current_balance < transaction_object.receiver_amount:
-                     frappe.throw(f"Insufficient balance in till {till_name}. Current balance is {till_object.current_balance}.")
+                if till_balance < transaction_object.receiver_amount:
+                     frappe.throw(f"Insufficient balance in till {till_name}. Current balance is {till_balance}.")
                 else:
                     print("about to update..")
-                    till_object.current_balance -= transaction_object.receiver_amount
-                    till_object.save()
+                    till_manager.adjust_balance(transaction_object.receiver_amount, "subtract")
                     print("updated")
             else:
                 frappe.throw("User does not have a till assigned.")
@@ -715,7 +726,8 @@ def handle_individual_agent(agent, user):
 
 def handle_organizational_agent(user):
     till = get_user_till(user)
-    if till and till.threshold_min > till.current_balance:
+    till_manager = TillManager()
+    if till and till.threshold_min > till_manager.get_till_balance():
         send_manager_alert(
             till=till,
             allowed_roles=["Agent Manager"],
@@ -725,7 +737,8 @@ def handle_organizational_agent(user):
 
 def handle_non_agent_case(user):
     till = get_user_till(user)
-    if till and till.threshold_min > till.current_balance:
+    till_manager = TillManager()
+    if till and till.threshold_min > till_manager.get_till_balance():
         send_manager_alert(
             till=till,
             allowed_roles=["Branch Manager"],
@@ -785,16 +798,16 @@ def send_balance_alert(recipients, subject, current_balance, threshold, is_till,
     # )
 
 @frappe.whitelist()
-def update_recipient_national_id(transaction_name = None, national_id = None,recipient_id = None,mobile_no = None): 
+def update_recipient_national_id(transaction_name = None, national_id = None,recipient_id = None,mobile_no = None):
     print("updating recipient national id========================", transaction_name, national_id, recipient_id, mobile_no)
     from frappe import _
     if not transaction_name or not national_id:
         frappe.throw(frappe._("Transaction name and national ID are required"))
 
-    
+
     if not frappe.db.exists("Transaction", transaction_name):
         frappe.throw(frappe._("Transaction not found"))
-    
+
     try:
         # Use SQL query to update
         if recipient_id:
@@ -803,12 +816,12 @@ def update_recipient_national_id(transaction_name = None, national_id = None,rec
                 SET receiver_id = %s
                 WHERE name = %s
             """, (national_id, transaction_name))
-        
-        
+
+
             frappe.db.sql("""
                 UPDATE `tabRecipient`
                 SET national_id = %s
-                WHERE name = %s  
+                WHERE name = %s
             """, (national_id, recipient_id))
             frappe.db.commit()
         elif mobile_no:
@@ -825,11 +838,11 @@ def update_recipient_national_id(transaction_name = None, national_id = None,rec
             """, (national_id, mobile_no))
             # Commit the transaction Recipient
             frappe.db.commit()
-            
+
         # Add a comment to track the change
         transaction = frappe.get_doc("Transaction", transaction_name)
         transaction.add_comment("Edit", f"Updated recipient national ID to {national_id}")
-        
+
         return {
             "status": "success"
             # "message": _("Recipient national ID updated successfully")

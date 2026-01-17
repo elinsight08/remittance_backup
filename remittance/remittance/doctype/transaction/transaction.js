@@ -22,7 +22,7 @@ frappe.ui.form.on("Transaction", {
                 });
             }).addClass('btn btn-primary');
         }
-        if (frm.doc.docstatus === 1 && frm.doc.transaction_status === 'Pending') {
+        if (frm.doc.docstatus === 1 && frm.doc.transaction_status === 'Pending' && frm.doc.owner === frappe.session.user) {
             frm.add_custom_button(__('Print'), () => {
                 openCustomPrint({
                     doctype: frm.doctype,
@@ -43,7 +43,7 @@ frappe.ui.form.on("Transaction", {
                 });
             }).addClass('btn btn-primary');
         }
-        
+
 
         // filters reciptients with sender id
         if (frm.doc.docstatus === 1) {
@@ -141,10 +141,10 @@ frappe.ui.form.on("Transaction", {
                                         indicator: 'green'
                                     }, 5);
 
-                               
+
                                 });
 
-                               
+
                             }
                         });
                     },

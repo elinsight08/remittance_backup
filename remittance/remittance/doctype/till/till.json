@@ -126,7 +126,6 @@
   {
    "fieldname": "cash_in_hand",
    "fieldtype": "Currency",
-   "hidden": 1,
    "label": "Cash In Balance"
   },
   {
@@ -180,7 +179,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-04 07:41:37.503495",
+ "modified": "2025-12-26 11:07:55.722712",
  "modified_by": "Administrator",
  "module": "Remittance",
  "name": "Till",
