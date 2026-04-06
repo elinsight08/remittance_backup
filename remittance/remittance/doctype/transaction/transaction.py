@@ -292,7 +292,7 @@ def withdraw(docname):
     frappe.db.sql("""
         UPDATE `tabTransaction`
         SET transaction_status = %s,
-            withdrawal_date = %s,
+            withdrawn_date = %s,
             withdrawn_till = %s,
             withdrawn_branch = %s,
 			withdrawn_by = %s,

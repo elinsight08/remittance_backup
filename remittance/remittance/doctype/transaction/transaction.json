@@ -56,7 +56,8 @@
   "recipient_reminder_days",
   "last_recipient_reminder",
   "sender_reminder_days",
-  "last_sender_reminder"
+  "last_sender_reminder",
+  "withdrawn_date"
  ],
  "fields": [
   {
@@ -410,6 +411,13 @@
    "hidden": 1,
    "label": "Reversed With Charge",
    "read_only": 1
+  },
+  {
+   "fieldname": "withdrawn_date",
+   "fieldtype": "Datetime",
+   "hidden": 1,
+   "label": "Withdrawn Date",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
@@ -417,7 +425,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-14 09:00:15.447310",
+ "modified": "2026-04-02 17:47:09.758239",
  "modified_by": "Administrator",
  "module": "Remittance",
  "name": "Transaction",
